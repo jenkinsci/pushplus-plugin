@@ -9,7 +9,7 @@
         <relativePath/>
     </parent>
     <groupId>io.jenkins.plugins</groupId>
-    <artifactId>push-plugin-jenkins</artifactId>
+    <artifactId>pushplus-plugin-jenkins</artifactId>
     <version>1.0</version>
     <packaging>hpi</packaging>
     <properties>

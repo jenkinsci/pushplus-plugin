@@ -1,4 +1,4 @@
-package io.jenkins.plugins.push;
+package io.jenkins.plugins.pushplus;
 
 import hudson.Extension;
 import hudson.FilePath;
