@@ -17,7 +17,7 @@ import java.io.IOException;
  **/
 public class PushPlusServiceImpl implements PushPlusService {
 
-    private static final String DEFAULT_URL = "http://pushplus.hxtrip.com/customer/jenkinsPush/sendJenkinsMessage";
+    private static final String DEFAULT_URL = "http://www.pushplus.plus/api/customer/jenkinsPush/sendJenkinsMessage";
 
     private Run<?, ?> run;
     /**
@@ -116,9 +116,7 @@ public class PushPlusServiceImpl implements PushPlusService {
 
         jsonObject.put("projectUrl", projectUrl);
         jsonObject.put("costTime", costTime + "");
-
         String body = HttpRequest.post(DEFAULT_URL).body(jsonObject).execute().body();
-
     }
 
 
