@@ -41,6 +41,7 @@ public class PushPlusServiceImpl implements PushPlusService {
             push(title);
         } catch (Exception e) {
             listener.getLogger().println("推送微信>>>获取微参数失败");
+            listener.getLogger().println("推送微信>>>获取微参数失败"+e.getMessage());
             e.printStackTrace();
         }
 
@@ -54,6 +55,7 @@ public class PushPlusServiceImpl implements PushPlusService {
             push(title);
         } catch (Exception e) {
             listener.getLogger().println("推送微信>>>获取微参数失败");
+            listener.getLogger().println("推送微信>>>获取微参数失败"+e.getMessage());
             e.printStackTrace();
         }
     }
@@ -65,6 +67,7 @@ public class PushPlusServiceImpl implements PushPlusService {
             push(title);
         } catch (Exception e) {
             listener.getLogger().println("推送微信>>>获取微参数失败");
+            listener.getLogger().println("推送微信>>>获取微参数失败"+e.getMessage());
             e.printStackTrace();
         }
 
@@ -93,8 +96,11 @@ public class PushPlusServiceImpl implements PushPlusService {
      */
     private void push(String title) throws IOException, InterruptedException {
         JSONObject jsonObject = new JSONObject();
-        Cause.UserIdCause userIdCause = (Cause.UserIdCause) this.run.getCause(Cause.UserIdCause.class);
-        String buildUser = userIdCause.getUserName();
+        Cause.UserIdCause cause =this.run.getCause(Cause.UserIdCause.class);
+        String buildUser="";
+        if(cause!=null){
+            buildUser = cause.getUserName();
+        }
         String buildNumber = "";
         buildNumber = run.getEnvironment(listener).get("BUILD_NUMBER");
         //获取构建状态
@@ -117,6 +123,7 @@ public class PushPlusServiceImpl implements PushPlusService {
         jsonObject.put("projectUrl", projectUrl);
         jsonObject.put("costTime", costTime + "");
         String body = HttpRequest.post(DEFAULT_URL).body(jsonObject).execute().body();
+        System.out.println(body);
     }
 
 
