@@ -12,7 +12,7 @@ import java.io.IOException;
  * @version 1.0
  * @ClassName PushPlusServiceImpl
  * @Description 处理具体消息逻辑
- * @Author zhangheng(中道)
+ * @Author zhangheng
  * @Date 2019/11/21 18:29
  **/
 public class PushPlusServiceImpl implements PushPlusService {

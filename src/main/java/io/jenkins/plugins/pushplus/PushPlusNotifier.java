@@ -20,7 +20,7 @@ import static hudson.Util.nullify;
  * @version 1.0
  * @ClassName PushPlusNotify
  * @Description
- * @Author zhangheng(中道)
+ * @Author zhangheng
  * @Date 2019/11/21 15:51
  **/
 public class PushPlusNotifier extends Notifier implements SimpleBuildStep {
@@ -42,17 +42,17 @@ public class PushPlusNotifier extends Notifier implements SimpleBuildStep {
     public void perform(@Nonnull Run<?, ?> run, @Nonnull FilePath filePath, @Nonnull Launcher launcher, @Nonnull TaskListener listener) throws InterruptedException, IOException {
         Result result = run.getResult();
         if (null != result && result.equals(Result.FAILURE)) {
-            listener.getLogger().println("项目构建失败,推送通知到push+");
+            listener.getLogger().println("项目构建失败,推送通知到pushplus");
             new PushPlusServiceImpl(run, listener, this).failure();
         } else if (null != result && result.equals(Result.ABORTED)) {
-            listener.getLogger().println("项目构建被终止,推送通知到push+");
+            listener.getLogger().println("项目构建被终止,推送通知到pushplus");
             new PushPlusServiceImpl(run, listener, this).aborted();
         } else if (null != result && result.equals(Result.UNSTABLE)) {
-            listener.getLogger().println("项目状态不稳定,推送通知到push+");
+            listener.getLogger().println("项目状态不稳定,推送通知到pushplus");
             new PushPlusServiceImpl(run, listener, this).unstable();
         } else {
             //项目未出现任何异常报错
-            listener.getLogger().println("推送通知到push+");
+            listener.getLogger().println("推送通知到pushplus");
             new PushPlusServiceImpl(run, listener, this).success();
         }
     }

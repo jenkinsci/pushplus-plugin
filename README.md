@@ -1,2 +1,2 @@
-##推送服务push插件
-> jenkins插件，推送到push+服务
+##推送服务pushplus插件
+> jenkins插件，将构建结果推送到 pushplus 推送加 服务

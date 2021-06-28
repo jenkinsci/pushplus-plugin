@@ -4,7 +4,7 @@ package io.jenkins.plugins.pushplus;
  * @version 1.0
  * @ClassName PushPlusService
  * @Description
- * @Author zhangheng(中道)
+ * @Author zhangheng
  * @Date 2019/11/21 18:23
  **/
 public interface PushPlusService {
