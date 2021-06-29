@@ -1,4 +1,4 @@
 <?jelly escape-by-default='true'?>
 <div>
-    pushplus 推送加 Jenkins插件 <a href="http://www.pushplus.plus/doc/extend/jenkins.html">使用请查看</a>
+    pushplus 推送加 Jenkins插件 <a href="http://www.pushplus.plus/doc/extend/jenkins.html" target="_blank">使用请查看</a>
 </div>

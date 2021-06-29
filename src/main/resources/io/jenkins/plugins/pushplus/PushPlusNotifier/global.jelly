@@ -1,6 +1,6 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout"
          xmlns:t="/lib/hudson" xmlns:f="/lib/form">
-    <f:section title="Extended pushplus 账号信息">
+    <f:section title="配置 pushplus 账号信息">
         <f:entry title="您的 Jenkins URL" field="returnUrl" value="${descriptor.returnUrl}">
             <f:textbox/>
         </f:entry>

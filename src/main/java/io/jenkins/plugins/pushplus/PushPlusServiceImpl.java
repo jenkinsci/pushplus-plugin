@@ -17,7 +17,7 @@ import java.io.IOException;
  **/
 public class PushPlusServiceImpl implements PushPlusService {
 
-    private static final String DEFAULT_URL = "http://www.pushplus.plus/api/customer/jenkinsPush/sendJenkinsMessage";
+    private static final String DEFAULT_URL = "http://www.pushplus.plus/send?template=jenkins";
 
     private Run<?, ?> run;
     /**
@@ -122,7 +122,13 @@ public class PushPlusServiceImpl implements PushPlusService {
 
         jsonObject.put("projectUrl", projectUrl);
         jsonObject.put("costTime", costTime + "");
-        String body = HttpRequest.post(DEFAULT_URL).body(jsonObject).execute().body();
+
+        listener.getLogger().println("请求内容：" + jsonObject.toString());
+        listener.getLogger().println("请求地址：" + DEFAULT_URL);
+
+        String body = HttpRequest.post(DEFAULT_URL).contentType("application/json").body(jsonObject.toString()).execute().body();
+        listener.getLogger().println("响应内容：" + body);
+
         System.out.println(body);
     }
 
