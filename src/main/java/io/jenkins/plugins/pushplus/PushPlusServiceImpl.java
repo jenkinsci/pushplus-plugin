@@ -1,6 +1,8 @@
 package io.jenkins.plugins.pushplus;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpRequest;
+import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONObject;
 import hudson.model.Cause;
 import hudson.model.Run;
@@ -17,7 +19,7 @@ import java.io.IOException;
  **/
 public class PushPlusServiceImpl implements PushPlusService {
 
-    private static final String DEFAULT_URL = "http://www.pushplus.plus/send?template=jenkins";
+    private static final String DEFAULT_URL = "http://www.pushplus.plus/send/%s/jenkins";
 
     private Run<?, ?> run;
     /**
@@ -40,8 +42,8 @@ public class PushPlusServiceImpl implements PushPlusService {
         try {
             push(title);
         } catch (Exception e) {
-            listener.getLogger().println("推送微信>>>获取微参数失败");
-            listener.getLogger().println("推送微信>>>获取微参数失败"+e.getMessage());
+            listener.getLogger().println("推送微信>>>获取参数失败");
+            listener.getLogger().println("推送微信>>>获取参数失败"+e.getMessage());
             e.printStackTrace();
         }
 
@@ -54,8 +56,8 @@ public class PushPlusServiceImpl implements PushPlusService {
         try {
             push(title);
         } catch (Exception e) {
-            listener.getLogger().println("推送微信>>>获取微参数失败");
-            listener.getLogger().println("推送微信>>>获取微参数失败"+e.getMessage());
+            listener.getLogger().println("推送微信>>>获取参数失败");
+            listener.getLogger().println("推送微信>>>获取参数失败"+e.getMessage());
             e.printStackTrace();
         }
     }
@@ -66,8 +68,8 @@ public class PushPlusServiceImpl implements PushPlusService {
         try {
             push(title);
         } catch (Exception e) {
-            listener.getLogger().println("推送微信>>>获取微参数失败");
-            listener.getLogger().println("推送微信>>>获取微参数失败"+e.getMessage());
+            listener.getLogger().println("推送微信>>>获取参数失败");
+            listener.getLogger().println("推送微信>>>获取参数失败"+e.getMessage());
             e.printStackTrace();
         }
 
@@ -79,8 +81,8 @@ public class PushPlusServiceImpl implements PushPlusService {
         try {
             push(title);
         } catch (Exception e) {
-            listener.getLogger().println("推送微信>>>获取微参数失败");
-            listener.getLogger().println("推送微信>>>获取微参数失败:" + e.getMessage());
+            listener.getLogger().println("推送微信>>>获取参数失败");
+            listener.getLogger().println("推送微信>>>获取参数失败:" + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -111,23 +113,21 @@ public class PushPlusServiceImpl implements PushPlusService {
 
         long costTime = (System.currentTimeMillis() - run.getStartTimeInMillis()) / 1000;
 
-        jsonObject.put("token", this.pushPlusNotifier.getDescriptor().getTokenId().trim());
-        jsonObject.put("topic", this.pushPlusNotifier.getTopic());
+        String url= String.format(DEFAULT_URL,this.pushPlusNotifier.getDescriptor().getTokenId().trim());
+
+        if(StrUtil.isNotEmpty(this.pushPlusNotifier.getTopic())){
+            jsonObject.put("topic", this.pushPlusNotifier.getTopic());
+        }
         jsonObject.put("title", title);
         jsonObject.put("buildState", buildState);
         jsonObject.put("projectName", this.run.getFullDisplayName());
         jsonObject.put("buildNumber", buildNumber);
         jsonObject.put("buildUser", buildUser);
         jsonObject.put("buildLogUrl", projectLogUrl);
-
         jsonObject.put("projectUrl", projectUrl);
         jsonObject.put("costTime", costTime + "");
 
-        listener.getLogger().println("请求内容：" + jsonObject.toString());
-        listener.getLogger().println("请求地址：" + DEFAULT_URL);
-
-        String body = HttpRequest.post(DEFAULT_URL).contentType("application/json").body(jsonObject.toString()).execute().body();
-        listener.getLogger().println("响应内容：" + body);
+        String body = HttpRequest.post(url).body(jsonObject.toString(),"application/json").execute().body();
 
         System.out.println(body);
     }
