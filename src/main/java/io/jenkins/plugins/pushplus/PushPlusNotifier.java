@@ -1,20 +1,28 @@
 package io.jenkins.plugins.pushplus;
 
-import hudson.Extension;
-import hudson.FilePath;
-import hudson.Launcher;
-import hudson.model.*;
-import hudson.tasks.*;
-import jenkins.tasks.SimpleBuildStep;
-import net.sf.json.JSONObject;
+import java.io.IOException;
+
+import javax.annotation.Nonnull;
+
 import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
 
-import javax.annotation.Nonnull;
-import java.io.IOException;
-
+import hudson.Extension;
+import hudson.FilePath;
+import hudson.Launcher;
 import static hudson.Util.nullify;
+import hudson.model.AbstractProject;
+import hudson.model.Result;
+import hudson.model.Run;
+import hudson.model.TaskListener;
+import hudson.tasks.BuildStepDescriptor;
+import hudson.tasks.BuildStepMonitor;
+import hudson.tasks.Notifier;
+import hudson.tasks.Publisher;
+import hudson.util.ListBoxModel;
+import jenkins.tasks.SimpleBuildStep;
+import net.sf.json.JSONObject;
 
 /**
  * @version 1.0
@@ -27,15 +35,33 @@ public class PushPlusNotifier extends Notifier implements SimpleBuildStep {
 
 
     private String topic;
+    private String channel;
+    private String webhook;
+    private String to;
 
     public String getTopic() {
         return topic;
     }
 
+    public String getChannel() {
+        return channel;
+    }
+
+    public String getWebhook() {
+        return webhook;
+    }
+
+    public String getTo() {
+        return to;
+    }
+
     @DataBoundConstructor
-    public PushPlusNotifier(String topic) {
+    public PushPlusNotifier(String topic, String channel, String webhook, String to) {
         super();
         this.topic = topic;
+        this.channel = channel;
+        this.webhook = webhook;
+        this.to = to;
     }
 
     @Override
@@ -113,6 +139,17 @@ public class PushPlusNotifier extends Notifier implements SimpleBuildStep {
 
         public void setTokenId(String tokenId) {
             this.tokenId = tokenId;
+        }
+
+        public ListBoxModel doFillChannelItems() {
+            ListBoxModel items = new ListBoxModel();
+            items.add("微信公众号(wechat)", "wechat");
+            items.add("第三方webhook(webhook)", "webhook");
+            items.add("企业微信应用(cp)", "cp");
+            items.add("邮件(mail)", "mail");
+            items.add("短信(sms)", "sms");
+            items.add("浏览器插件(extension)", "extension");
+            return items;
         }
     }
 }

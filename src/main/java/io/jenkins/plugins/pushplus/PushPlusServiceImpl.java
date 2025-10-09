@@ -1,14 +1,13 @@
 package io.jenkins.plugins.pushplus;
 
+import java.io.IOException;
+
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpRequest;
-import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONObject;
 import hudson.model.Cause;
 import hudson.model.Run;
 import hudson.model.TaskListener;
-
-import java.io.IOException;
 
 /**
  * @version 1.0
@@ -103,8 +102,7 @@ public class PushPlusServiceImpl implements PushPlusService {
         if(cause!=null){
             buildUser = cause.getUserName();
         }
-        String buildNumber = "";
-        buildNumber = run.getEnvironment(listener).get("BUILD_NUMBER");
+        String buildNumber = run.getEnvironment(listener).get("BUILD_NUMBER");
         //获取构建状态
 
         String buildState = this.run.getResult() != null ? this.run.getResult().toString() : "";
@@ -117,6 +115,15 @@ public class PushPlusServiceImpl implements PushPlusService {
 
         if(StrUtil.isNotEmpty(this.pushPlusNotifier.getTopic())){
             jsonObject.put("topic", this.pushPlusNotifier.getTopic());
+        }
+        if(StrUtil.isNotEmpty(this.pushPlusNotifier.getChannel())){
+            jsonObject.put("channel", this.pushPlusNotifier.getChannel());
+        }
+        if(StrUtil.isNotEmpty(this.pushPlusNotifier.getWebhook())){
+            jsonObject.put("webhook", this.pushPlusNotifier.getWebhook());
+        }
+        if(StrUtil.isNotEmpty(this.pushPlusNotifier.getTo())){
+            jsonObject.put("to", this.pushPlusNotifier.getTo());
         }
         jsonObject.put("title", title);
         jsonObject.put("buildState", buildState);
