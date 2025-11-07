@@ -148,6 +148,7 @@ public class PushPlusNotifier extends Notifier implements SimpleBuildStep {
             items.add("企业微信应用(cp)", "cp");
             items.add("邮件(mail)", "mail");
             items.add("短信(sms)", "sms");
+            items.add("语音(voice)", "voice");
             items.add("浏览器插件(extension)", "extension");
             return items;
         }
