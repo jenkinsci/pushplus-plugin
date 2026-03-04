@@ -68,17 +68,16 @@ public class PushPlusNotifier extends Notifier implements SimpleBuildStep {
     public void perform(@Nonnull Run<?, ?> run, @Nonnull FilePath filePath, @Nonnull Launcher launcher, @Nonnull TaskListener listener) throws InterruptedException, IOException {
         Result result = run.getResult();
         if (null != result && result.equals(Result.FAILURE)) {
-            listener.getLogger().println("项目构建失败,推送通知到pushplus");
+            listener.getLogger().println(Messages.PushPlusNotifier_BuildFailure());
             new PushPlusServiceImpl(run, listener, this).failure();
         } else if (null != result && result.equals(Result.ABORTED)) {
-            listener.getLogger().println("项目构建被终止,推送通知到pushplus");
+            listener.getLogger().println(Messages.PushPlusNotifier_BuildAborted());
             new PushPlusServiceImpl(run, listener, this).aborted();
         } else if (null != result && result.equals(Result.UNSTABLE)) {
-            listener.getLogger().println("项目状态不稳定,推送通知到pushplus");
+            listener.getLogger().println(Messages.PushPlusNotifier_BuildUnstable());
             new PushPlusServiceImpl(run, listener, this).unstable();
         } else {
-            //项目未出现任何异常报错
-            listener.getLogger().println("推送通知到pushplus");
+            listener.getLogger().println(Messages.PushPlusNotifier_BuildSuccess());
             new PushPlusServiceImpl(run, listener, this).success();
         }
     }
@@ -106,8 +105,6 @@ public class PushPlusNotifier extends Notifier implements SimpleBuildStep {
 
         @Override
         public boolean configure(StaplerRequest req, JSONObject formData) throws FormException {
-            // Most of this stuff is the same as the built-in email publisher
-
             this.returnUrl = nullify(formData.getString("returnUrl"));
             this.tokenId = nullify(formData.getString("tokenId"));
             save();
@@ -122,7 +119,7 @@ public class PushPlusNotifier extends Notifier implements SimpleBuildStep {
 
         @Override
         public String getDisplayName() {
-            return "plusplus";
+            return Messages.PushPlusNotifier_DescriptorImpl_DisplayName();
         }
 
         public String getReturnUrl() {
@@ -143,14 +140,14 @@ public class PushPlusNotifier extends Notifier implements SimpleBuildStep {
 
         public ListBoxModel doFillChannelItems() {
             ListBoxModel items = new ListBoxModel();
-            items.add("微信服务号(wechat)", "wechat");
-            items.add("第三方webhook(webhook)", "webhook");
-            items.add("企业微信应用(cp)", "cp");
-            items.add("邮件(mail)", "mail");
-            items.add("短信(sms)", "sms");
-            items.add("语音(voice)", "voice");
-            items.add("插件(extension)", "extension");
-            items.add("App(app)", "app");
+            items.add(Messages.PushPlusNotifier_ChannelWechat(), "wechat");
+            items.add(Messages.PushPlusNotifier_ChannelWebhook(), "webhook");
+            items.add(Messages.PushPlusNotifier_ChannelCp(), "cp");
+            items.add(Messages.PushPlusNotifier_ChannelMail(), "mail");
+            items.add(Messages.PushPlusNotifier_ChannelSms(), "sms");
+            items.add(Messages.PushPlusNotifier_ChannelVoice(), "voice");
+            items.add(Messages.PushPlusNotifier_ChannelExtension(), "extension");
+            items.add(Messages.PushPlusNotifier_ChannelApp(), "app");
             return items;
         }
     }
