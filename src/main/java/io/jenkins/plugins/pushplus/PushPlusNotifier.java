@@ -143,13 +143,14 @@ public class PushPlusNotifier extends Notifier implements SimpleBuildStep {
 
         public ListBoxModel doFillChannelItems() {
             ListBoxModel items = new ListBoxModel();
-            items.add("微信公众号(wechat)", "wechat");
+            items.add("微信服务号(wechat)", "wechat");
             items.add("第三方webhook(webhook)", "webhook");
             items.add("企业微信应用(cp)", "cp");
             items.add("邮件(mail)", "mail");
             items.add("短信(sms)", "sms");
             items.add("语音(voice)", "voice");
-            items.add("浏览器插件(extension)", "extension");
+            items.add("插件(extension)", "extension");
+            items.add("App(app)", "app");
             return items;
         }
     }

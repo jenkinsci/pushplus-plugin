@@ -14,12 +14,13 @@
    - 不填写则仅发送给自己
 
 2. **发送渠道 (channel)**
-   - **wechat** - 微信公众号（默认）
+   - **wechat** - 微信服务号（默认）
    - **webhook** - 第三方webhook（企业微信、钉钉、飞书、Server酱、IFTTT等）
    - **cp** - 企业微信应用
    - **mail** - 邮件
    - **sms** - 短信
-   - **extension** - 浏览器插件
+   - **extension** - 插件
+   - **app** - App
 
 3. **Webhook编码 (webhook)**
    - 仅在选择webhook渠道时有效
@@ -30,14 +31,14 @@
    - 可提前自定义代码来修改消息内容
 
 5. **好友令牌 (to)**
-   - 微信公众号渠道：填写好友令牌
+   - 微信服务号渠道：填写好友令牌
    - 企业微信渠道：填写企业微信用户id
    - 多人接收：用逗号隔开
    - 不填写则仅发送给自己
 
 ### 使用方法
 
-1. 在Jenkins全局配置中配置PushPlus Token和Jenkins URL
+1. 在Jenkins全局配置中配置pushplus Token和Jenkins URL
 2. 在项目的构建后操作中添加"plusplus"步骤
 3. 根据需要配置相应的推送参数
 4. 保存配置后，每次构建完成都会自动推送通知
