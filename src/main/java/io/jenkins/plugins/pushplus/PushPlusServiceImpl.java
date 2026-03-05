@@ -18,7 +18,7 @@ import hudson.model.TaskListener;
  **/
 public class PushPlusServiceImpl implements PushPlusService {
 
-    private static final String DEFAULT_URL = "http://www.pushplus.plus/send/%s/jenkins";
+    private static final String DEFAULT_URL = "https://www.pushplus.plus/send/%s/jenkins";
 
     private Run<?, ?> run;
 
