@@ -13,7 +13,7 @@
         <f:textbox/>
     </f:entry>
 
-    <f:entry title="${%Webhook}" field="webhook">
+    <f:entry title="${%Option}" field="option">
         <f:textbox/>
     </f:entry>
 

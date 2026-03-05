@@ -18,7 +18,7 @@ import hudson.model.TaskListener;
  **/
 public class PushPlusServiceImpl implements PushPlusService {
 
-    private static final String DEFAULT_URL = "https://www.pushplus.plus/send/%s/jenkins";
+    private static final String DEFAULT_URL = "https://www.pushplus.plus/send/";
 
     private Run<?, ?> run;
 
@@ -98,7 +98,11 @@ public class PushPlusServiceImpl implements PushPlusService {
 
         long costTime = (System.currentTimeMillis() - run.getStartTimeInMillis()) / 1000;
 
-        String url = String.format(DEFAULT_URL, this.pushPlusNotifier.getDescriptor().getTokenId().trim());
+        String url = DEFAULT_URL;
+
+        jsonObject.put("token", this.pushPlusNotifier.getDescriptor().getTokenId().trim());
+        jsonObject.put("template", "jenkins");
+        jsonObject.put("title", title);
 
         if (StrUtil.isNotEmpty(this.pushPlusNotifier.getTopic())) {
             jsonObject.put("topic", this.pushPlusNotifier.getTopic());
@@ -112,14 +116,18 @@ public class PushPlusServiceImpl implements PushPlusService {
         if (StrUtil.isNotEmpty(this.pushPlusNotifier.getTo())) {
             jsonObject.put("to", this.pushPlusNotifier.getTo());
         }
-        jsonObject.put("title", title);
-        jsonObject.put("buildState", buildState);
-        jsonObject.put("projectName", this.run.getFullDisplayName());
-        jsonObject.put("buildNumber", buildNumber);
-        jsonObject.put("buildUser", buildUser);
-        jsonObject.put("buildLogUrl", projectLogUrl);
-        jsonObject.put("projectUrl", projectUrl);
-        jsonObject.put("costTime", costTime + "");
+
+        JSONObject content = new JSONObject();
+
+        content.put("buildState", buildState);
+        content.put("projectName", this.run.getFullDisplayName());
+        content.put("buildNumber", buildNumber);
+        content.put("buildUser", buildUser);
+        content.put("buildLogUrl", projectLogUrl);
+        content.put("projectUrl", projectUrl);
+        content.put("costTime", costTime + "");
+
+        jsonObject.put("content", content);
 
         String body = HttpRequest.post(url).body(jsonObject.toString(), "application/json").execute().body();
 

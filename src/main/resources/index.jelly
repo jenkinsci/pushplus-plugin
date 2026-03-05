@@ -1,4 +1,4 @@
 <?jelly escape-by-default='true'?>
 <div>
-    PushPlus Jenkins Plugin <a href="http://www.pushplus.plus/doc/extend/jenkins.html" target="_blank">Documentation</a>
+    pushplus Jenkins Plugin <a href="http://www.pushplus.plus/doc/extend/jenkins.html" target="_blank">Documentation</a>
 </div>
