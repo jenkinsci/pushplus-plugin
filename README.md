@@ -31,12 +31,12 @@ Go to **Manage Jenkins > Configure System**, find the **PushPlus** section:
 
 In your job's **Post-build Actions**, add **PushPlus Notification**:
 
-| Parameter | Description |
-|-----------|-------------|
-| **Topic** | Group code for group messaging. Leave empty to send to yourself only. |
-| **Channel** | Delivery channel: `wechat` (default), `webhook`, `cp`, `mail`, `sms`, `extension`, `app` |
-| **Webhook** | Webhook code, only effective when channel is `webhook` |
-| **To** | Friend token (WeChat) or user ID (WeCom). Comma-separated for multiple recipients. |
+| Parameter | Description                                                                                        |
+|-----------|----------------------------------------------------------------------------------------------------|
+| **Topic** | Group code for group messaging. Leave empty to send to yourself only.                              |
+| **Channel** | Delivery channel: `wechat` (default), `webhook`, `cp`, `mail`, `sms`, `extension`, `app`,`clawbot` |
+| **Webhook** | Webhook code, only effective when channel is `webhook`                                             |
+| **To** | Friend token (WeChat) or user ID (WeCom). Comma-separated for multiple recipients.                 |
 
 ### Pipeline Usage
 
@@ -87,6 +87,7 @@ Licensed under the [MIT License](LICENSE).
    - **sms** - 短信
    - **extension** - 插件
    - **app** - App
+   - **clawbot** - 微信ClawBot
 
 3. **Webhook 编码 (webhook)**
    - 仅在选择 webhook 渠道时有效
