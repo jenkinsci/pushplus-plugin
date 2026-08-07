@@ -93,14 +93,17 @@ public class PushPlusServiceImpl implements PushPlusService {
         String buildNumber = run.getEnvironment(listener).get("BUILD_NUMBER");
 
         String buildState = this.run.getResult() != null ? this.run.getResult().toString() : "";
-        String projectUrl = this.pushPlusNotifier.getDescriptor().getReturnUrl() + this.run.getUrl();
-        String projectLogUrl = this.pushPlusNotifier.getDescriptor().getReturnUrl() + this.run.getUrl() + "/console";
+        PushPlusGlobalConfiguration global = PushPlusGlobalConfiguration.get();
+        String jenkinsUrl = global.getReturnUrl() != null ? global.getReturnUrl() : "";
+        String projectUrl = jenkinsUrl + this.run.getUrl();
+        String projectLogUrl = jenkinsUrl + this.run.getUrl() + "/console";
 
         long costTime = (System.currentTimeMillis() - run.getStartTimeInMillis()) / 1000;
 
         String url = DEFAULT_URL;
 
-        jsonObject.put("token", this.pushPlusNotifier.getDescriptor().getTokenId().trim());
+        String token = global.getTokenId() != null ? global.getTokenId().trim() : "";
+        jsonObject.put("token", token);
         jsonObject.put("template", "jenkins");
         jsonObject.put("title", title);
 

@@ -6,12 +6,10 @@ import javax.annotation.Nonnull;
 
 import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.DataBoundConstructor;
-import org.kohsuke.stapler.StaplerRequest;
 
 import hudson.Extension;
 import hudson.FilePath;
 import hudson.Launcher;
-import static hudson.Util.nullify;
 import hudson.model.AbstractProject;
 import hudson.model.Result;
 import hudson.model.Run;
@@ -22,7 +20,6 @@ import hudson.tasks.Notifier;
 import hudson.tasks.Publisher;
 import hudson.util.ListBoxModel;
 import jenkins.tasks.SimpleBuildStep;
-import net.sf.json.JSONObject;
 
 /**
  * @version 1.0
@@ -95,20 +92,9 @@ public class PushPlusNotifier extends Notifier implements SimpleBuildStep {
     @Extension
     @Symbol("pushplus")
     public static final class DescriptorImpl extends BuildStepDescriptor<Publisher> {
-        private String returnUrl;
-
-        private String tokenId;
 
         public DescriptorImpl() {
             load();
-        }
-
-        @Override
-        public boolean configure(StaplerRequest req, JSONObject formData) throws FormException {
-            this.returnUrl = nullify(formData.getString("returnUrl"));
-            this.tokenId = nullify(formData.getString("tokenId"));
-            save();
-            return super.configure(req, formData);
         }
 
         @Override
@@ -116,26 +102,21 @@ public class PushPlusNotifier extends Notifier implements SimpleBuildStep {
             return true;
         }
 
-
         @Override
         public String getDisplayName() {
             return Messages.PushPlusNotifier_DescriptorImpl_DisplayName();
         }
 
+        /** @deprecated use {@link PushPlusGlobalConfiguration#getReturnUrl()} */
+        @Deprecated
         public String getReturnUrl() {
-            return returnUrl;
+            return PushPlusGlobalConfiguration.get().getReturnUrl();
         }
 
-        public void setReturnUrl(String returnUrl) {
-            this.returnUrl = returnUrl;
-        }
-
+        /** @deprecated use {@link PushPlusGlobalConfiguration#getTokenId()} */
+        @Deprecated
         public String getTokenId() {
-            return tokenId;
-        }
-
-        public void setTokenId(String tokenId) {
-            this.tokenId = tokenId;
+            return PushPlusGlobalConfiguration.get().getTokenId();
         }
 
         public ListBoxModel doFillChannelItems() {
