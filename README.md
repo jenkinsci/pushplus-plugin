@@ -5,6 +5,8 @@
 
 Send Jenkins build notifications to [PushPlus](https://www.pushplus.plus/) push service, supporting WeChat, webhook, email, SMS, and more.
 
+> Source: [pushplus/perk-pushplus-plugin-jenkins](https://github.com/pushplus/perk-pushplus-plugin-jenkins). After Jenkins hosting, the canonical repository will be under the `jenkinsci` organization.
+
 ## Features
 
 - Push build result notifications (success / failure / aborted / unstable)
@@ -33,10 +35,10 @@ In your job's **Post-build Actions**, add **PushPlus Notification**:
 
 | Parameter | Description                                                                                        |
 |-----------|----------------------------------------------------------------------------------------------------|
+| **Channel** | Delivery channel: `wechat` (default), `webhook`, `cp`, `mail`, `sms`, `voice`, `extension`, `app`, `clawbot` |
 | **Topic** | Group code for group messaging. Leave empty to send to yourself only.                              |
-| **Channel** | Delivery channel: `wechat` (default), `webhook`, `cp`, `mail`, `sms`, `extension`, `app`,`clawbot` |
-| **Webhook** | Webhook code, only effective when channel is `webhook`                                             |
 | **To** | Friend token (WeChat) or user ID (WeCom). Comma-separated for multiple recipients.                 |
+| **Webhook** | Channel option / webhook code (used by webhook and other channels that need extra config).         |
 
 ### Pipeline Usage
 
@@ -102,7 +104,7 @@ Licensed under the [MIT License](LICENSE).
 ### 使用方法
 
 1. 在 Jenkins 全局配置中配置 PushPlus Token 和 Jenkins URL
-2. 在项目的构建后操作中添加 "PushPlus Notification" 步骤
+2. 在项目的构建后操作中添加 **PushPlus Notification**（中文界面显示为「PushPlus 推送通知」）步骤
 3. 根据需要配置相应的推送参数
 4. 保存配置后，每次构建完成都会自动推送通知
 

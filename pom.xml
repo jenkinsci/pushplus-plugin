@@ -14,9 +14,10 @@
     <packaging>hpi</packaging>
     <properties>
         <jenkins.version>2.426.3</jenkins.version>
-        <gitHubRepo>jenkinsci/${project.artifactId}</gitHubRepo>
+        <!-- After jenkinsci hosting, change to: jenkinsci/${project.artifactId} -->
+        <gitHubRepo>pushplus/perk-pushplus-plugin-jenkins</gitHubRepo>
     </properties>
-    <name>pushplus Plugin</name>
+    <name>PushPlus Notification</name>
     <description>Sends Jenkins build notifications to PushPlus push service (WeChat, webhook, email, SMS, etc.)</description>
 
     <licenses>
@@ -34,8 +35,7 @@
         </developer>
     </developers>
 
-<!--    <url>https://github.com/jenkinsci/${project.artifactId}</url>-->
-    <url>https://github.com/pushplus/perk-pushplus-plugin-jenkins.git</url>
+    <url>https://github.com/pushplus/perk-pushplus-plugin-jenkins</url>
     <scm>
         <connection>scm:git:https://github.com/${gitHubRepo}.git</connection>
         <developerConnection>scm:git:git@github.com:${gitHubRepo}.git</developerConnection>
