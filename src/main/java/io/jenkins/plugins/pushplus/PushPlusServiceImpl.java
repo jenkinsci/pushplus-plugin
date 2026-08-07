@@ -1,30 +1,28 @@
 package io.jenkins.plugins.pushplus;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.time.Duration;
 
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.http.HttpRequest;
-import cn.hutool.json.JSONObject;
 import hudson.model.Cause;
+import hudson.model.Result;
 import hudson.model.Run;
 import hudson.model.TaskListener;
+import net.sf.json.JSONObject;
 
 /**
- * @version 1.0
- * @ClassName PushPlusServiceImpl
- * @Description
- * @Author zhangheng
- * @Date 2019/11/21 18:29
- **/
+ * Sends build notifications to the pushplus HTTP API.
+ */
 public class PushPlusServiceImpl implements PushPlusService {
 
     private static final String DEFAULT_URL = "https://www.pushplus.plus/send/";
 
-    private Run<?, ?> run;
-
-    private TaskListener listener;
-
-    private PushPlusNotifier pushPlusNotifier;
+    private final Run<?, ?> run;
+    private final TaskListener listener;
+    private final PushPlusNotifier pushPlusNotifier;
 
     public PushPlusServiceImpl(Run<?, ?> run, TaskListener listener, PushPlusNotifier pushPlusNotifier) {
         this.run = run;
@@ -40,7 +38,7 @@ public class PushPlusServiceImpl implements PushPlusService {
         } catch (Exception e) {
             listener.getLogger().println(Messages.PushPlusServiceImpl_PushError());
             listener.getLogger().println(Messages.PushPlusServiceImpl_PushErrorDetail(e.getMessage()));
-            e.printStackTrace();
+            e.printStackTrace(listener.getLogger());
         }
     }
 
@@ -52,7 +50,7 @@ public class PushPlusServiceImpl implements PushPlusService {
         } catch (Exception e) {
             listener.getLogger().println(Messages.PushPlusServiceImpl_PushError());
             listener.getLogger().println(Messages.PushPlusServiceImpl_PushErrorDetail(e.getMessage()));
-            e.printStackTrace();
+            e.printStackTrace(listener.getLogger());
         }
     }
 
@@ -64,7 +62,7 @@ public class PushPlusServiceImpl implements PushPlusService {
         } catch (Exception e) {
             listener.getLogger().println(Messages.PushPlusServiceImpl_PushError());
             listener.getLogger().println(Messages.PushPlusServiceImpl_PushErrorDetail(e.getMessage()));
-            e.printStackTrace();
+            e.printStackTrace(listener.getLogger());
         }
     }
 
@@ -76,64 +74,69 @@ public class PushPlusServiceImpl implements PushPlusService {
         } catch (Exception e) {
             listener.getLogger().println(Messages.PushPlusServiceImpl_PushError());
             listener.getLogger().println(Messages.PushPlusServiceImpl_PushErrorDetail(e.getMessage()));
-            e.printStackTrace();
+            e.printStackTrace(listener.getLogger());
         }
     }
 
-    /**
-     * @param title 标题
-     */
     private void push(String title) throws IOException, InterruptedException {
-        JSONObject jsonObject = new JSONObject();
         Cause.UserIdCause cause = this.run.getCause(Cause.UserIdCause.class);
         String buildUser = "";
         if (cause != null) {
             buildUser = cause.getUserName();
         }
         String buildNumber = run.getEnvironment(listener).get("BUILD_NUMBER");
+        if (buildNumber == null) {
+            buildNumber = "";
+        }
 
-        String buildState = this.run.getResult() != null ? this.run.getResult().toString() : "";
+        Result result = this.run.getResult();
+        String buildState = result != null ? result.toString() : "";
         PushPlusGlobalConfiguration global = PushPlusGlobalConfiguration.get();
-        String jenkinsUrl = global.getReturnUrl() != null ? global.getReturnUrl() : "";
+        String jenkinsUrl = global != null && global.getReturnUrl() != null ? global.getReturnUrl() : "";
         String projectUrl = jenkinsUrl + this.run.getUrl();
-        String projectLogUrl = jenkinsUrl + this.run.getUrl() + "/console";
+        String projectLogUrl = jenkinsUrl + this.run.getUrl() + "console";
 
         long costTime = (System.currentTimeMillis() - run.getStartTimeInMillis()) / 1000;
 
-        String url = DEFAULT_URL;
-
-        String token = global.getTokenId() != null ? global.getTokenId().trim() : "";
+        String tokenId = global != null ? global.getTokenId() : null;
+        String token = tokenId != null ? tokenId.trim() : "";
+        JSONObject jsonObject = new JSONObject();
         jsonObject.put("token", token);
         jsonObject.put("template", "jenkins");
         jsonObject.put("title", title);
 
-        if (StrUtil.isNotEmpty(this.pushPlusNotifier.getTopic())) {
-            jsonObject.put("topic", this.pushPlusNotifier.getTopic());
-        }
-        if (StrUtil.isNotEmpty(this.pushPlusNotifier.getChannel())) {
-            jsonObject.put("channel", this.pushPlusNotifier.getChannel());
-        }
-        if (StrUtil.isNotEmpty(this.pushPlusNotifier.getWebhook())) {
-            jsonObject.put("webhook", this.pushPlusNotifier.getWebhook());
-        }
-        if (StrUtil.isNotEmpty(this.pushPlusNotifier.getTo())) {
-            jsonObject.put("to", this.pushPlusNotifier.getTo());
-        }
+        putIfNotBlank(jsonObject, "topic", this.pushPlusNotifier.getTopic());
+        putIfNotBlank(jsonObject, "channel", this.pushPlusNotifier.getChannel());
+        putIfNotBlank(jsonObject, "webhook", this.pushPlusNotifier.getWebhook());
+        putIfNotBlank(jsonObject, "to", this.pushPlusNotifier.getTo());
 
         JSONObject content = new JSONObject();
-
         content.put("buildState", buildState);
         content.put("projectName", this.run.getFullDisplayName());
         content.put("buildNumber", buildNumber);
         content.put("buildUser", buildUser);
         content.put("buildLogUrl", projectLogUrl);
         content.put("projectUrl", projectUrl);
-        content.put("costTime", costTime + "");
+        content.put("costTime", Long.toString(costTime));
 
         jsonObject.put("content", content);
 
-        String body = HttpRequest.post(url).body(jsonObject.toString(), "application/json").execute().body();
+        HttpClient client = HttpClient.newBuilder()
+                .connectTimeout(Duration.ofSeconds(10))
+                .build();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(DEFAULT_URL))
+                .timeout(Duration.ofSeconds(30))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(jsonObject.toString()))
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        listener.getLogger().println("pushplus >>> HTTP " + response.statusCode() + ": " + response.body());
+    }
 
-        System.out.println(body);
+    private static void putIfNotBlank(JSONObject json, String key, String value) {
+        if (value != null && !value.isBlank()) {
+            json.put(key, value);
+        }
     }
 }

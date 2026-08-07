@@ -1,7 +1,7 @@
 # pushplus Notification Plugin for Jenkins
 
-[![Jenkins Plugin](https://img.shields.io/jenkins/plugin/v/pushplus-plugin-jenkins.svg)](https://plugins.jenkins.io/pushplus-plugin-jenkins)
-[![Jenkins Plugin Installs](https://img.shields.io/jenkins/plugin/i/pushplus-plugin-jenkins.svg?color=blue)](https://plugins.jenkins.io/pushplus-plugin-jenkins)
+[![Jenkins Plugin](https://img.shields.io/jenkins/plugin/v/pushplus.svg)](https://plugins.jenkins.io/pushplus)
+[![Jenkins Plugin Installs](https://img.shields.io/jenkins/plugin/i/pushplus.svg?color=blue)](https://plugins.jenkins.io/pushplus)
 
 Send Jenkins build notifications to [pushplus](https://www.pushplus.plus/) push service, supporting WeChat, webhook, email, SMS, and more.
 

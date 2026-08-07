@@ -2,11 +2,10 @@ package io.jenkins.plugins.pushplus;
 
 import java.io.IOException;
 
-import javax.annotation.Nonnull;
-
 import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.DataBoundConstructor;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.Extension;
 import hudson.FilePath;
 import hudson.Launcher;
@@ -62,7 +61,7 @@ public class PushPlusNotifier extends Notifier implements SimpleBuildStep {
     }
 
     @Override
-    public void perform(@Nonnull Run<?, ?> run, @Nonnull FilePath filePath, @Nonnull Launcher launcher, @Nonnull TaskListener listener) throws InterruptedException, IOException {
+    public void perform(@NonNull Run<?, ?> run, @NonNull FilePath filePath, @NonNull Launcher launcher, @NonNull TaskListener listener) throws InterruptedException, IOException {
         Result result = run.getResult();
         if (null != result && result.equals(Result.FAILURE)) {
             listener.getLogger().println(Messages.PushPlusNotifier_BuildFailure());
