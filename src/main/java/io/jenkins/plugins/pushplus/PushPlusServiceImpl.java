@@ -11,6 +11,7 @@ import hudson.model.Cause;
 import hudson.model.Result;
 import hudson.model.Run;
 import hudson.model.TaskListener;
+import hudson.util.Secret;
 import net.sf.json.JSONObject;
 
 /**
@@ -98,10 +99,14 @@ public class PushPlusServiceImpl implements PushPlusService {
 
         long costTime = (System.currentTimeMillis() - run.getStartTimeInMillis()) / 1000;
 
-        String tokenId = global != null ? global.getTokenId() : null;
-        String token = tokenId != null ? tokenId.trim() : "";
+        Secret tokenSecret = global != null ? global.getTokenId() : null;
+        String token = tokenSecret != null ? tokenSecret.getPlainText() : "";
+        if (token == null || token.isBlank()) {
+            listener.getLogger().println(Messages.PushPlusServiceImpl_TokenMissing());
+            return;
+        }
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("token", token);
+        jsonObject.put("token", token.trim());
         jsonObject.put("template", "jenkins");
         jsonObject.put("title", title);
 

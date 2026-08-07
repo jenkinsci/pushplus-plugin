@@ -5,6 +5,7 @@ import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.StaplerRequest2;
 
 import hudson.Extension;
+import hudson.util.Secret;
 import jenkins.model.GlobalConfiguration;
 import net.sf.json.JSONObject;
 
@@ -16,7 +17,7 @@ import net.sf.json.JSONObject;
 public class PushPlusGlobalConfiguration extends GlobalConfiguration {
 
     private String returnUrl;
-    private String tokenId;
+    private Secret tokenId;
 
     public PushPlusGlobalConfiguration() {
         load();
@@ -47,12 +48,12 @@ public class PushPlusGlobalConfiguration extends GlobalConfiguration {
         this.returnUrl = returnUrl;
     }
 
-    public String getTokenId() {
+    public Secret getTokenId() {
         return tokenId;
     }
 
     @DataBoundSetter
-    public void setTokenId(String tokenId) {
+    public void setTokenId(Secret tokenId) {
         this.tokenId = tokenId;
     }
 }

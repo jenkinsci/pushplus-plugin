@@ -18,6 +18,7 @@ import hudson.tasks.BuildStepMonitor;
 import hudson.tasks.Notifier;
 import hudson.tasks.Publisher;
 import hudson.util.ListBoxModel;
+import hudson.util.Secret;
 import jenkins.tasks.SimpleBuildStep;
 
 /**
@@ -115,7 +116,8 @@ public class PushPlusNotifier extends Notifier implements SimpleBuildStep {
         /** @deprecated use {@link PushPlusGlobalConfiguration#getTokenId()} */
         @Deprecated
         public String getTokenId() {
-            return PushPlusGlobalConfiguration.get().getTokenId();
+            Secret token = PushPlusGlobalConfiguration.get().getTokenId();
+            return token != null ? token.getPlainText() : null;
         }
 
         public ListBoxModel doFillChannelItems() {
