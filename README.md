@@ -1,9 +1,9 @@
-# PushPlus Notification Plugin for Jenkins
+# pushplus Notification Plugin for Jenkins
 
 [![Jenkins Plugin](https://img.shields.io/jenkins/plugin/v/pushplus-plugin-jenkins.svg)](https://plugins.jenkins.io/pushplus-plugin-jenkins)
 [![Jenkins Plugin Installs](https://img.shields.io/jenkins/plugin/i/pushplus-plugin-jenkins.svg?color=blue)](https://plugins.jenkins.io/pushplus-plugin-jenkins)
 
-Send Jenkins build notifications to [PushPlus](https://www.pushplus.plus/) push service, supporting WeChat, webhook, email, SMS, and more.
+Send Jenkins build notifications to [pushplus](https://www.pushplus.plus/) push service, supporting WeChat, webhook, email, SMS, and more.
 
 > Source: [pushplus/perk-pushplus-plugin-jenkins](https://github.com/pushplus/perk-pushplus-plugin-jenkins). After Jenkins hosting, the canonical repository will be under the `jenkinsci` organization.
 
@@ -17,21 +17,21 @@ Send Jenkins build notifications to [PushPlus](https://www.pushplus.plus/) push 
 ## Installation
 
 1. Go to **Manage Jenkins > Manage Plugins > Available**
-2. Search for **PushPlus Notification**
+2. Search for **pushplus Notification**
 3. Install and restart Jenkins
 
 ## Configuration
 
 ### Global Configuration
 
-Go to **Manage Jenkins > Configure System**, find the **PushPlus** section:
+Go to **Manage Jenkins > Configure System**, find the **pushplus** section:
 
-- **Token**: Your PushPlus token (get it from [pushplus.plus](https://www.pushplus.plus/))
+- **Token**: Your pushplus token (get it from [pushplus.plus](https://www.pushplus.plus/))
 - **Jenkins URL**: Your Jenkins base URL for build result links
 
 ### Job Configuration
 
-In your job's **Post-build Actions**, add **PushPlus Notification**:
+In your job's **Post-build Actions**, add **pushplus Notification**:
 
 | Parameter | Description                                                                                        |
 |-----------|----------------------------------------------------------------------------------------------------|
@@ -65,14 +65,14 @@ Licensed under the [MIT License](LICENSE).
 
 ---
 
-## 推送服务 PushPlus 插件
+## 推送服务 pushplus 插件
 
-> Jenkins 插件，将构建结果推送到 [PushPlus 推送加](https://www.pushplus.plus/) 服务
+> Jenkins 插件，将构建结果推送到 [pushplus 推送加](https://www.pushplus.plus/) 服务
 
 ### 功能特性
 
 #### 基础配置
-- **Token 配置**：在 Jenkins 全局配置中设置 PushPlus Token
+- **Token 配置**：在 Jenkins 全局配置中设置 pushplus Token
 - **Jenkins URL**：配置 Jenkins 访问地址，用于构建结果链接
 
 #### 推送参数配置
@@ -93,7 +93,7 @@ Licensed under the [MIT License](LICENSE).
 
 3. **Webhook 编码 (webhook)**
    - 仅在选择 webhook 渠道时有效
-   - 可在 PushPlus 官网获取或配置 webhook 地址
+   - 可在 pushplus 官网获取或配置 webhook 地址
 
 4. **好友令牌 (to)**
    - 微信服务号渠道：填写好友令牌
@@ -103,8 +103,8 @@ Licensed under the [MIT License](LICENSE).
 
 ### 使用方法
 
-1. 在 Jenkins 全局配置中配置 PushPlus Token 和 Jenkins URL
-2. 在项目的构建后操作中添加 **PushPlus Notification**（中文界面显示为「PushPlus 推送通知」）步骤
+1. 在 Jenkins 全局配置中配置 pushplus Token 和 Jenkins URL
+2. 在项目的构建后操作中添加 **pushplus Notification**（中文界面显示为「pushplus 推送通知」）步骤
 3. 根据需要配置相应的推送参数
 4. 保存配置后，每次构建完成都会自动推送通知
 

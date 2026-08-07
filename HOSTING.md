@@ -23,7 +23,7 @@ Suggested field values:
 | GitHub Source Repository | `https://github.com/pushplus/perk-pushplus-plugin-jenkins` |
 | Artifact ID | `pushplus-plugin-jenkins` |
 | Group ID | `io.jenkins.plugins` |
-| Description | Sends Jenkins build notifications to PushPlus (WeChat, webhook, email, SMS, etc.) |
+| Description | Sends Jenkins build notifications to pushplus (WeChat, webhook, email, SMS, etc.) |
 | License | MIT |
 | Jenkins account | `pcstx` |
 | GitHub users to add | `pcstx` |
@@ -39,10 +39,10 @@ Issue body draft:
 ```markdown
 ### Plugin information
 
-- **Plugin name**: PushPlus Notification
+- **Plugin name**: pushplus Notification
 - **Artifact ID**: `pushplus-plugin-jenkins`
 - **Group ID**: `io.jenkins.plugins`
-- **Description**: Sends Jenkins build notifications to PushPlus push service (WeChat, webhook, email, SMS, etc.)
+- **Description**: Sends Jenkins build notifications to pushplus push service (WeChat, webhook, email, SMS, etc.)
 - **License**: MIT
 - **Source repository**: https://github.com/pushplus/perk-pushplus-plugin-jenkins
 
@@ -53,7 +53,7 @@ Issue body draft:
 
 ### Notes
 
-This plugin is a `Notifier` / Pipeline step (`@Symbol("pushplus")`) for PushPlus notifications.
+This plugin is a `Notifier` / Pipeline step (`@Symbol("pushplus")`) for pushplus notifications.
 We would like the hosted repository name to be `pushplus-plugin-jenkins` to match the artifactId.
 ```
 
@@ -91,7 +91,7 @@ With CD enabled:
 2. Open a PR with a user-facing change (or documentation) and label it `enhancement` (or another release-worthy label).
 3. Merge to the default branch; CD will publish to Artifactory.
 4. Within a few hours the plugin appears on https://plugins.jenkins.io/pushplus-plugin-jenkins
-5. Install via **Manage Jenkins > Plugins**, search **PushPlus Notification**.
+5. Install via **Manage Jenkins > Plugins**, search **pushplus Notification**.
 
 ## 5. Post-release polish
 

@@ -9,7 +9,7 @@ import jenkins.model.GlobalConfiguration;
 import net.sf.json.JSONObject;
 
 /**
- * Global PushPlus settings shown on Manage Jenkins &gt; System.
+ * Global pushplus settings shown on Manage Jenkins &gt; System.
  */
 @Extension
 @Symbol("pushplusGlobalConfig")
