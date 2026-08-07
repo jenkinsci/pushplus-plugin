@@ -7,8 +7,8 @@ https://www.jenkins.io/doc/developer/publishing/requesting-hosting/
 
 - [x] Public GitHub repo: https://github.com/pushplus/perk-pushplus-plugin-jenkins
 - [x] MIT `LICENSE` + `pom.xml` `<licenses>`
-- [x] `accounts.jenkins.io` account (log in once to Artifactory and Jira before RPU permissions)
-- [ ] GitHub user ready to file the hosting issue
+- [x] `accounts.jenkins.io` account: `pcstx` (log in once to Artifactory and Jira before RPU permissions)
+- [x] GitHub user: `pcstx`
 
 ## 1. Open Hosting Request
 
@@ -25,8 +25,8 @@ Suggested field values:
 | Group ID | `io.jenkins.plugins` |
 | Description | Sends Jenkins build notifications to PushPlus (WeChat, webhook, email, SMS, etc.) |
 | License | MIT |
-| Jenkins account | *(your accounts.jenkins.io username)* |
-| GitHub users to add | *(your GitHub username)* |
+| Jenkins account | `pcstx` |
+| GitHub users to add | `pcstx` |
 
 Issue title example:
 
@@ -48,8 +48,8 @@ Issue body draft:
 
 ### Accounts
 
-- **Jenkins account**: REPLACE_ME
-- **GitHub users who should have access**: REPLACE_ME
+- **Jenkins account**: pcstx
+- **GitHub users who should have access**: pcstx
 
 ### Notes
 
@@ -78,7 +78,7 @@ github: "jenkinsci/pushplus-plugin-jenkins"
 cd:
   enabled: true
 developers:
-  - "REPLACE_WITH_JENKINS_USER_ID"
+  - "pcstx"
 ```
 
 After merge, wait until GitHub Actions secrets `MAVEN_USERNAME` and `MAVEN_TOKEN` appear on the jenkinsci repo.
