@@ -1,10 +1,12 @@
+<?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout"
          xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+    <!-- On Configure System, `it` is the Descriptor; do not use ${descriptor.*} here. -->
     <f:section title="${%SectionTitle}">
-        <f:entry title="${%ReturnUrl}" field="returnUrl" value="${descriptor.returnUrl}">
+        <f:entry title="${%ReturnUrl}" field="returnUrl">
             <f:textbox/>
         </f:entry>
-        <f:entry title="${%TokenId}" field="tokenId" value="${descriptor.tokenId}">
+        <f:entry title="${%TokenId}" field="tokenId">
             <f:textbox/>
         </f:entry>
     </f:section>
