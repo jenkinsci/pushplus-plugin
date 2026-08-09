@@ -1,12 +1,8 @@
 package io.jenkins.plugins.pushplus;
 
 /**
- * @version 1.0
- * @ClassName PushPlusService
- * @Description
- * @Author zhangheng
- * @Date 2019/11/21 18:23
- **/
+ * Sends pushplus notifications for the different Jenkins build results.
+ */
 public interface PushPlusService {
     /**
      * 请求成功
