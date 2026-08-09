@@ -5,7 +5,7 @@
 
 Send Jenkins build notifications to [pushplus](https://www.pushplus.plus/) push service, supporting WeChat, webhook, email, SMS, and more.
 
-> Source: [pushplus/perk-pushplus-plugin-jenkins](https://github.com/pushplus/perk-pushplus-plugin-jenkins). After Jenkins hosting, the canonical repository will be under the `jenkinsci` organization.
+> Source: [jenkinsci/pushplus-plugin](https://github.com/jenkinsci/pushplus-plugin)
 
 ## Features
 
