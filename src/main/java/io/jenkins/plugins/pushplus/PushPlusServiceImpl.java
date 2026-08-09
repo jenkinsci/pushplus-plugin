@@ -7,6 +7,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
 
+import hudson.ProxyConfiguration;
 import hudson.model.Cause;
 import hudson.model.Result;
 import hudson.model.Run;
@@ -126,11 +127,11 @@ public class PushPlusServiceImpl implements PushPlusService {
 
         jsonObject.put("content", content);
 
-        HttpClient client = HttpClient.newBuilder()
+        URI uri = URI.create(DEFAULT_URL);
+        HttpClient client = ProxyConfiguration.newHttpClientBuilder()
                 .connectTimeout(Duration.ofSeconds(10))
                 .build();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(DEFAULT_URL))
+        HttpRequest request = ProxyConfiguration.newHttpRequestBuilder(uri)
                 .timeout(Duration.ofSeconds(30))
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(jsonObject.toString()))
