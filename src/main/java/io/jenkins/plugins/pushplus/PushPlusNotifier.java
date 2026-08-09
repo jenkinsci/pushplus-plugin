@@ -3,12 +3,15 @@ package io.jenkins.plugins.pushplus;
 import java.io.IOException;
 
 import org.jenkinsci.Symbol;
+import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.DataBoundConstructor;
+import org.kohsuke.stapler.verb.POST;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.EnvVars;
 import hudson.Extension;
 import hudson.model.AbstractProject;
+import hudson.model.Item;
 import hudson.model.Result;
 import hudson.model.Run;
 import hudson.model.TaskListener;
@@ -18,6 +21,7 @@ import hudson.tasks.Notifier;
 import hudson.tasks.Publisher;
 import hudson.util.ListBoxModel;
 import hudson.util.Secret;
+import jenkins.model.Jenkins;
 import jenkins.tasks.SimpleBuildStep;
 
 /**
@@ -120,7 +124,13 @@ public class PushPlusNotifier extends Notifier implements SimpleBuildStep {
             return token != null ? token.getPlainText() : null;
         }
 
-        public ListBoxModel doFillChannelItems() {
+        @POST
+        public ListBoxModel doFillChannelItems(@AncestorInPath Item item) {
+            if (item == null) {
+                Jenkins.get().checkPermission(Jenkins.ADMINISTER);
+            } else {
+                item.checkPermission(Item.CONFIGURE);
+            }
             ListBoxModel items = new ListBoxModel();
             items.add(Messages.PushPlusNotifier_ChannelWechat(), "wechat");
             items.add(Messages.PushPlusNotifier_ChannelApp(), "app");
