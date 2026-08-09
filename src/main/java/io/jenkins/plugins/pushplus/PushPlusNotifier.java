@@ -6,9 +6,8 @@ import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+import hudson.EnvVars;
 import hudson.Extension;
-import hudson.FilePath;
-import hudson.Launcher;
 import hudson.model.AbstractProject;
 import hudson.model.Result;
 import hudson.model.Run;
@@ -22,14 +21,9 @@ import hudson.util.Secret;
 import jenkins.tasks.SimpleBuildStep;
 
 /**
- * @version 1.0
- * @ClassName PushPlusNotify
- * @Description
- * @Author zhangheng
- * @Date 2019/11/21 15:51
- **/
+ * Sends build result notifications via pushplus.
+ */
 public class PushPlusNotifier extends Notifier implements SimpleBuildStep {
-
 
     private String topic;
     private String channel;
@@ -62,7 +56,13 @@ public class PushPlusNotifier extends Notifier implements SimpleBuildStep {
     }
 
     @Override
-    public void perform(@NonNull Run<?, ?> run, @NonNull FilePath filePath, @NonNull Launcher launcher, @NonNull TaskListener listener) throws InterruptedException, IOException {
+    public boolean requiresWorkspace() {
+        return false;
+    }
+
+    @Override
+    public void perform(@NonNull Run<?, ?> run, @NonNull EnvVars env, @NonNull TaskListener listener)
+            throws InterruptedException, IOException {
         Result result = run.getResult();
         if (null != result && result.equals(Result.FAILURE)) {
             listener.getLogger().println(Messages.PushPlusNotifier_BuildFailure());

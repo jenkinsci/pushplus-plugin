@@ -2,12 +2,10 @@ package io.jenkins.plugins.pushplus;
 
 import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.DataBoundSetter;
-import org.kohsuke.stapler.StaplerRequest2;
 
 import hudson.Extension;
 import hudson.util.Secret;
 import jenkins.model.GlobalConfiguration;
-import net.sf.json.JSONObject;
 
 /**
  * Global pushplus settings shown on Manage Jenkins &gt; System.
@@ -32,13 +30,6 @@ public class PushPlusGlobalConfiguration extends GlobalConfiguration {
         return Messages.PushPlusNotifier_DescriptorImpl_DisplayName();
     }
 
-    @Override
-    public boolean configure(StaplerRequest2 req, JSONObject json) throws FormException {
-        req.bindJSON(this, json);
-        save();
-        return true;
-    }
-
     public String getReturnUrl() {
         return returnUrl;
     }
@@ -46,6 +37,7 @@ public class PushPlusGlobalConfiguration extends GlobalConfiguration {
     @DataBoundSetter
     public void setReturnUrl(String returnUrl) {
         this.returnUrl = returnUrl;
+        save();
     }
 
     public Secret getTokenId() {
@@ -55,5 +47,6 @@ public class PushPlusGlobalConfiguration extends GlobalConfiguration {
     @DataBoundSetter
     public void setTokenId(Secret tokenId) {
         this.tokenId = tokenId;
+        save();
     }
 }
