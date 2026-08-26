@@ -137,6 +137,7 @@ public class PushPlusNotifier extends Notifier implements SimpleBuildStep {
             items.add(Messages.PushPlusNotifier_ChannelExtension(), "extension");
             items.add(Messages.PushPlusNotifier_ChannelWebhook(), "webhook");
             items.add(Messages.PushPlusNotifier_ChannelClawBot(), "clawbot");
+            items.add(Messages.PushPlusNotifier_ChannelQq(), "qq");
             items.add(Messages.PushPlusNotifier_ChannelCp(), "cp");
             items.add(Messages.PushPlusNotifier_ChannelMail(), "mail");
             items.add(Messages.PushPlusNotifier_ChannelSms(), "sms");
