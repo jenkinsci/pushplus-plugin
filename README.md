@@ -10,7 +10,7 @@ Send Jenkins build notifications to [pushplus](https://www.pushplus.plus/) push 
 ## Features
 
 - Push build result notifications (success / failure / aborted / unstable)
-- Multiple delivery channels: WeChat Official Account, Webhook (WeCom, DingTalk, Feishu, etc.), WeCom App, Email, SMS, App, QQ Bot
+- Multiple delivery channels: WeChat Official Account, Webhook (WeCom, DingTalk, Feishu, etc.), WeCom App, Email, SMS, App, QQ Bot, New Message ClawBot
 - Group messaging via topic codes
 - Multi-recipient support
 
@@ -35,7 +35,7 @@ In your job's **Post-build Actions**, add **pushplus Notification**:
 
 | Parameter | Description                                                                                        |
 |-----------|----------------------------------------------------------------------------------------------------|
-| **Channel** | Delivery channel: `wechat` (default), `webhook`, `cp`, `mail`, `sms`, `voice`, `extension`, `app`, `clawbot`, `qq` |
+| **Channel** | Delivery channel: `wechat` (default), `webhook`, `cp`, `mail`, `sms`, `voice`, `extension`, `app`, `clawbot`, `cmcc`, `qq` |
 | **Topic** | Group code for group messaging. Leave empty to send to yourself only.                              |
 | **To** | Friend token (WeChat) or user ID (WeCom). Comma-separated for multiple recipients.                 |
 | **Webhook** | Channel option / webhook code (used by webhook and other channels that need extra config).         |
@@ -90,6 +90,7 @@ Licensed under the [MIT License](LICENSE).
    - **extension** - 插件
    - **app** - App
    - **clawbot** - 微信ClawBot
+   - **cmcc** - 新消息ClawBot
    - **qq** - QQ机器人
 
 3. **Webhook 编码 (webhook)**
